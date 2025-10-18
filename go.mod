@@ -4,7 +4,8 @@ go 1.17
 
 require (
 	github.com/buger/jsonparser v1.1.1
-	github.com/go-git/go-git/v5 v5.4.2
+	github.com/go-git/go-git/v5 v5.4.2//as
+
 	github.com/golang-jwt/jwt/v4 v4.1.0
 	github.com/gookit/color v1.4.2
 	github.com/jfrog/build-info-go v0.1.0
