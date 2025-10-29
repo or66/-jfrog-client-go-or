@@ -9,6 +9,8 @@ func GetVersion() string {
 	return agentVersion
 }
 
+
+
 func GetName() string {
 	return agentName
 }
