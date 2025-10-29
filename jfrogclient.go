@@ -17,6 +17,7 @@ func GetUserAgent() string {
 	return fmt.Sprintf("%s/%s", agentName, agentVersion)
 }
 
+
 func SetAgentName(name string) {
 	agentName = name
 }
