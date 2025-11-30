@@ -5,6 +5,7 @@
 | master | [![Build status](https://github.com/jfrog/jfrog-client-go/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/jfrog/jfrog-client-go/actions) |
 |  dev   |  [![Build status](https://github.com/jfrog/jfrog-client-go/actions/workflows/tests.yml/badge.svg?branch=dev)](https://github.com/jfrog/jfrog-client-go/actions)   |
 
+
 ## Table of Contents
 
 - [jfrog-client-go](#jfrog-client-go)
