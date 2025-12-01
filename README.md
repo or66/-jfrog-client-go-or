@@ -190,7 +190,7 @@ go test -v github.com/jfrog/jfrog-client-go/tests -timeout 0 -run TestGetArtifac
 | `-test.access`       | Access tests       | Artifactory Pro               |
 | `-test.repository`   | Access tests       | Artifactory Pro               |
 
-#### Connection Details
+#### Connection Details:
 
 | Flag                  | Description                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------ |
