@@ -16,7 +16,7 @@ func GetName() string {
 func GetUserAgent() string {
 	return fmt.Sprintf("%s/%s", agentName, agentVersion)
 }
-
+// lol
 func SetAgentName(name string) {
 	agentName = name
 }
