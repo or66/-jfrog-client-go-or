@@ -12,7 +12,7 @@ func GetVersion() string {
 func GetName() string {
 	return agentName
 }
-
+// lol
 func GetUserAgent() string {
 	return fmt.Sprintf("%s/%s", agentName, agentVersion)
 }
