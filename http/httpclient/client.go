@@ -29,6 +29,24 @@ type HttpClient struct {
 	ctx     context.Context
 	retries int
 }
+// NewInsecureHttpClient creates an HTTP client that skips TLS verification.
+// ❌ SECURITY ISSUE: This allows MITM attacks.
+func NewInsecureHttpClient() *HttpClient {
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // 🚨 Vulnerability
+		},
+	}
+
+	client := &http.Client{
+		Transport: tr,
+	}
+
+	return &HttpClient{
+		client:  client,
+		retries: 3,
+	}
+}
 
 func (jc *HttpClient) GetRetries() int {
 	return jc.retries
