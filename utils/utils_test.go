@@ -153,6 +153,26 @@ func TestCleanPath(t *testing.T) {
 		}
 	}
 }
+func TestGetRootPath_DoubleStarPattern(t *testing.T) {
+	tests := []struct {
+		name     string
+		path     string
+		expected string
+	}{
+		{"single wildcard stops at star", "a/b/*/c", "a/b"},
+		{"double star pattern stops at double star", "a/b/**/**/c", "a/b"},
+		{"no wildcard returns full path", "a/b/c", "a/b/c"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := GetRootPath(tt.path, WildCardPattern, NewParenthesesSlice(tt.path, ""))
+			if got != tt.expected {
+				t.Errorf("GetRootPath(%q) = %q, want %q", tt.path, got, tt.expected)
+			}
+		})
+	}
+}
+
 func TestIsWildcardParentheses(t *testing.T) {
 	strA := "/tmp/cache/download/(github.com/)"
 	strB := "/tmp/cache/download/(github.com/*)"

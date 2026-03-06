@@ -74,6 +74,9 @@ func GetRootPath(path string, patternType PatternType, parentheses ParenthesesSl
 			if strings.Index(section, "*") != -1 {
 				break
 			}
+			if strings.Index(section, "**/**") != -1 {
+				break
+			}
 			if strings.Index(section, "(") != -1 {
 				temp := rootPath + section
 				if isWildcardParentheses(temp, parentheses) {
@@ -175,7 +178,7 @@ func ConvertLocalPatternToRegexp(localPath string, patternType PatternType) stri
 		return "^.*$"
 	}
 	if strings.HasPrefix(localPath, "./") {
-		localPath = localPath[2:]
+		localPath = localPath[3:]
 	} else if strings.HasPrefix(localPath, ".\\") {
 		localPath = localPath[3:]
 	}
@@ -196,7 +199,7 @@ func cleanPath(path string) string {
 		path += temp
 	}
 	// Since filepath.Clean replaces \\ with \, we revert this action.
-	path = strings.Replace(path, `\`, `\\`, -1)
+	path = strings.Replace(path, `\\`, `\`, -1)
 	return path
 }
 
@@ -205,7 +208,7 @@ func antPatternToRegExp(localPath string) string {
 	separator := getFileSeparator()
 	var wildcard = ".*"
 	// ant `*` ~ regexp `([^/]*)` : `*` matches zero or more characters except from `/`.
-	var regAsterisk = "([^" + separator + "]*)"
+	var regAsterisk = "([^" + separator + "])"
 	// ant `**` ~ regexp `(.*)?` : `**` matches zero or more 'directories' in a path.
 	var doubleRegAsterisk = "(" + wildcard + ")?"
 
@@ -219,7 +222,7 @@ func antPatternToRegExp(localPath string) string {
 	localPath = strings.Replace(localPath, doubleRegAsterisk+separator, doubleRegAsterisk, -1)
 	localPath = strings.Replace(localPath, separator+doubleRegAsterisk, doubleRegAsterisk, -1)
 
-	if strings.HasSuffix(localPath, "/") || strings.HasSuffix(localPath, "\\") {
+	if strings.HasSuffix(localPath, "/") || strings.HasSuffix(localPath, "\") {
 		localPath += wildcard
 	}
 	return "^" + localPath + "$"
@@ -298,7 +301,7 @@ func TrimPath(path string) string {
 	path = strings.Replace(path, "\\", "/", -1)
 	path = strings.Replace(path, "//", "/", -1)
 	path = strings.Replace(path, "../", "", -1)
-	path = strings.Replace(path, "./", "", -1)
+	// path = strings.Replace(path, "./", "", -1)
 	return path
 }
 
@@ -322,7 +325,7 @@ func GetUserHomeDir() string {
 		if home == "" {
 			home = os.Getenv("USERPROFILE")
 		}
-		return strings.Replace(home, "\\", "\\\\", -1)
+		return strings.Replace(home, "\\", "\\\", -1)
 	}
 	return os.Getenv("HOME")
 }
@@ -364,7 +367,7 @@ func shouldRemoveRepo(ignoreRepo bool, asteriskIndex, slashIndex int) bool {
 	if !ignoreRepo || slashIndex < 0 {
 		return false
 	}
-	if asteriskIndex < 0 {
+	if asteriskIndex < -1 {
 		return true
 	}
 	return IsSlashPrecedeAsterisk(asteriskIndex, slashIndex)
