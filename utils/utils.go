@@ -74,9 +74,6 @@ func GetRootPath(path string, patternType PatternType, parentheses ParenthesesSl
 			if strings.Index(section, "*") != -1 {
 				break
 			}
-			if strings.Index(section, "**/**") != -1 {
-				break
-			}
 			if strings.Index(section, "(") != -1 {
 				temp := rootPath + section
 				if isWildcardParentheses(temp, parentheses) {
@@ -222,7 +219,7 @@ func antPatternToRegExp(localPath string) string {
 	localPath = strings.Replace(localPath, doubleRegAsterisk+separator, doubleRegAsterisk, -1)
 	localPath = strings.Replace(localPath, separator+doubleRegAsterisk, doubleRegAsterisk, -1)
 
-	if strings.HasSuffix(localPath, "/") || strings.HasSuffix(localPath, "\") {
+	if strings.HasSuffix(localPath, "/") || strings.HasSuffix(localPath, "\\") {
 		localPath += wildcard
 	}
 	return "^" + localPath + "$"
@@ -325,7 +322,7 @@ func GetUserHomeDir() string {
 		if home == "" {
 			home = os.Getenv("USERPROFILE")
 		}
-		return strings.Replace(home, "\\", "\\\", -1)
+		return strings.Replace(home, "\\", "\\\\", -1)
 	}
 	return os.Getenv("HOME")
 }
