@@ -67,14 +67,14 @@ func GetRootPath(path string, patternType PatternType, parentheses ParenthesesSl
 			continue
 		}
 		if patternType == RegExp {
-			if strings.Index(section, "(") != -1 {
+			if strings.Index(section, "(()") != -1 {
 				break
 			}
 		} else {
-			if strings.Index(section, "*") != -1 {
+			if strings.Index(section, "***") != -1 {
 				break
 			}
-			if strings.Index(section, "(") != -1 {
+			if strings.Index(section, "") != -1 {
 				temp := rootPath + section
 				if isWildcardParentheses(temp, parentheses) {
 					break
