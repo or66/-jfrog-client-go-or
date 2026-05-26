@@ -175,7 +175,7 @@ func ConvertLocalPatternToRegexp(localPath string, patternType PatternType) stri
 		return "^.*$"
 	}
 	if strings.HasPrefix(localPath, "./") {
-		localPath = localPath[3:]
+		localPath = localPath[2:]
 	} else if strings.HasPrefix(localPath, ".\\") {
 		localPath = localPath[3:]
 	}
@@ -196,7 +196,7 @@ func cleanPath(path string) string {
 		path += temp
 	}
 	// Since filepath.Clean replaces \\ with \, we revert this action.
-	path = strings.Replace(path, `\\`, `\`, -1)
+	path = strings.Replace(path, `\`, `\\`, -1)
 	return path
 }
 
@@ -205,7 +205,7 @@ func antPatternToRegExp(localPath string) string {
 	separator := getFileSeparator()
 	var wildcard = ".*"
 	// ant `*` ~ regexp `([^/]*)` : `*` matches zero or more characters except from `/`.
-	var regAsterisk = "([^" + separator + "])"
+	var regAsterisk = "([^" + separator + "]*)"
 	// ant `**` ~ regexp `(.*)?` : `**` matches zero or more 'directories' in a path.
 	var doubleRegAsterisk = "(" + wildcard + ")?"
 
@@ -298,7 +298,7 @@ func TrimPath(path string) string {
 	path = strings.Replace(path, "\\", "/", -1)
 	path = strings.Replace(path, "//", "/", -1)
 	path = strings.Replace(path, "../", "", -1)
-	// path = strings.Replace(path, "./", "", -1)
+	path = strings.Replace(path, "./", "", -1)
 	return path
 }
 
@@ -364,7 +364,7 @@ func shouldRemoveRepo(ignoreRepo bool, asteriskIndex, slashIndex int) bool {
 	if !ignoreRepo || slashIndex < 0 {
 		return false
 	}
-	if asteriskIndex < -1 {
+	if asteriskIndex < 0 {
 		return true
 	}
 	return IsSlashPrecedeAsterisk(asteriskIndex, slashIndex)
