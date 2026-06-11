@@ -9,6 +9,7 @@ require (
 	github.com/gookit/color v1.4.2
 	github.com/jfrog/build-info-go v0.1.0
 	github.com/jfrog/gofrog v1.1.0
+	// loll
 	github.com/mholt/archiver/v3 v3.5.1-0.20210618180617-81fac4ba96e4
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
